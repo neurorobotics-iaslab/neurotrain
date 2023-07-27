@@ -1,46 +1,44 @@
-function [out, labels] = neuro_channels_extract(in, labels, excluded)
+function [out, labels] = neuro_channels_extract(in, labels, selected)
 
     if(ismatrix(in) == false)
         error('[%s] - Input data must have 2 dimensions: samples x channels', mfilename)
     end
 
 
-    if( iscellstr(excluded) || isstring(excluded) || ischar(excluded))
-        excludedIdx = label2index(labels, excluded);
+    if( iscellstr(selected) || isstring(selected) || ischar(selected))
+        selectedIdx = label2index(labels, selected);
     else
-        excludedIdx = excluded;
+        selectedIdx = selected;
     end
 
     warning('off','backtrace');
-    for eId = 1:length(excludedIdx)
-        chIdx = excludedIdx(eId);
+    for eId = 1:length(selectedIdx)
+        chIdx = selectedIdx(eId);
         chLbl = labels{chIdx};
-        warning('[%s] - Channel %d (label: ''%s'') has been excluded', mfilename, chIdx, chLbl);
+        warning('[%s] - Channel %d (label: ''%s'') has been selected', mfilename, chIdx, chLbl);
     end
     warning('on','backtrace');
 
-    labelIdx = 1:length(labels);
-    index = setdiff(labelIdx, excludedIdx, 'stable');
-    out = in(:, index);
-    labels = labels(index);
+    out = in(:, selectedIdx);
+    labels = labels(selectedIdx);
 
 end
 
 
-function index = label2index(labels, excluded)
+function index = label2index(labels, selected)
 
-    excluded = lower(excluded);
+    selected = lower(selected);
     labels   = lower(labels);
     
-    if(isstring(excluded))
-        excluded = {convertStringsToChars(lower(excluded))};
-    elseif (ischar(excluded))
-        excluded = {excluded};
+    if(isstring(selected))
+        selected = {convertStringsToChars(lower(selected))};
+    elseif (ischar(selected))
+        selected = {selected};
     end
 
     index = [];
-    for eId = 1:length(excluded)
-        index = cat(1, index, find(contains(labels,excluded{eId})));
+    for eId = 1:length(selected)
+        index = cat(1, index, find(contains(labels,selected{eId})));
     end
     
 end
