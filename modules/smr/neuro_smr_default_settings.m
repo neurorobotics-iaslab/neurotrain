@@ -1,7 +1,6 @@
 function settings = neuro_smr_default_settings()
     
     %% Processing
-
     settings.processing.psd.wlength    = 0.5;
     settings.processing.psd.pshift     = 0.25;                  
     settings.processing.psd.wshift     = 0.0625; 

@@ -3,7 +3,7 @@ function neurodata = neurodata_parse_info(neurodata,filepath)
     [~,filename,~] = fileparts(filepath);
     
     parts = strsplit(filename, '.');
-    if length(parts) == 1
+    if length(parts) < 5
         
         neurodata.info.filepath = filepath;
         
