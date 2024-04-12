@@ -21,18 +21,19 @@ function settings = neurotrain_smr_launcher(InputArgs)
     delete(settingsgui);
 
     % Parsing GUI output
-    files = output.files;
+    files = output.data.filepaths;
     settings = output.options;
 
+
     %% Loading neurodata
-    files{1}.filepath = '/home/stetor/neurodata/s1.20230201.112519.online.mi_bhbf.exponential_sym.gdf'; % TO BE REMOVED
-    files{2}.filepath = '/home/stetor/neurodata/s1.20230201.120823.online.mi_bhbf.exponential_sym.gdf'; % TO BE REMOVED
+%     files{1}.filepath = '/home/stetor/neurodata/s1.20230201.112519.online.mi_bhbf.exponential_sym.gdf'; % TO BE REMOVED
+%     files{2}.filepath = '/home/stetor/neurodata/s1.20230201.120823.online.mi_bhbf.exponential_sym.gdf'; % TO BE REMOVED
     NumFiles = length(files);
 
     neurodataset = cell(NumFiles, 1);
     for f = 1:NumFiles
-        neurodisp(['[neurotrain] Loading data from ', files{1}.filepath])
-        neurodataset{f} = neurodata_load_data(settings, files{f}.filepath);
+        neurodisp(['[neurotrain] Loading data from ', files{1}])
+        neurodataset{f} = neurodata_load_data(settings, files{f});
     end
 
     %% Compute SMR processing
